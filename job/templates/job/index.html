@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  {% load static %}
   <!-- Mobile Specific Meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Favicon-->
@@ -15,26 +16,43 @@
   <meta charset="UTF-8">
   <!-- Site Title -->
   <title>SKT-WORK THAT MATTERS!</title>
-    <link rel="stylesheet" href="css/linearicons.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/main.css">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+  <!--<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!--
+    CSS
+    ============================================= -->
+    <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script>
+    // object-fit polyfill run
+objectFitImages();
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+/* init Jarallax */
+jarallax(document.querySelectorAll('.jarallax'));
 
+jarallax(document.querySelectorAll('.jarallax-keep-img'), {
+  keepImg: true,
+});
+    </script>
   </head>
   <body>
+
+
 
     <!-- Start Header Area -->
      <header class="default-header">
       <nav class="navbar navbar-expand-lg  navbar-light">
         <div class="container">
-           <a class="navbar-brand" href="index.html">
-              <img src="img/shikhar kant tiwari.png" alt="" height="50" width="100%">
+           <a class="navbar-brand" href="{% url 'home' %}">
+              <img src="{% static 'img/shikhar-kant-tiwari.png' %}" alt="" height="50" width="100%">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="text-white lnr lnr-menu"></span>
@@ -47,18 +65,30 @@
               <li><a href="#service">Services</a></li>
               <li><a href="#testimonial">Testimonial</a></li>
                 <li><a href="#resume">Resume</a></li>
+               <!-- Dropdown -->
+                <!--<li class="dropdown">
+                  <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Pages
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="generic.html">Generic</a>
+                    <a class="dropdown-item" href="elements.html">Elements</a>
+                  </div>
+                </li>-->
               </ul>
             </div>
       </nav>
     </header>
     <!-- End Header Area -->
       <!-- start banner Area -->
-      <section class="banner-area relative" id="home">
-        <div class="overlay2 overlay-bg"></div>
+      <section class="banner-area relative" id="home" >
+        <div class="overlay2 overlay-bg view jarallax"></div>
         <div class="container">
           <div class="row fullscreen d-flex align-items-center justify-content-center">
             <div class="banner-content col-lg-10">
-              <h1 class="text-uppercase" color="white" style="font-family:Garamond;">SHIKHAR KANT TIWARI</h1>
+              <img src="{% static 'img/developer.png'%}" class="imgcircle img1">
+                <img src="{% static 'img/camera.jfif'%}" class-"imgcircle img2">
+              <h1 class="text-uppercase display-3 font-weight-bold mb-2 wow fadeInDown" color="white" style="font-family:Garamond;">SHIKHAR KANT TIWARI</h1>
               <h2>
                 I help small businesses build a strong web presence through design and consulting services.
               </h2></br>
@@ -68,8 +98,7 @@
         </div>
       </section>
       <!-- End banner Area -->
-
-      <!-- Start portfolio-area Area -->
+          <!-- Start portfolio-area Area -->
       <section class="portfolio-area section-gap" id="portfolio">
         <div class="container">
           <div class="row d-flex justify-content-center">
@@ -83,93 +112,28 @@
           <div class="filters">
             <ul>
               <li class="active" data-filter="*">All</li>
+             <!-- <li data-filter=".corporate">Vector</li>
+              <li data-filter=".personal">Raster</li>
+              <li data-filter=".agency">UI/UX</li>
+              <li data-filter=".portal">Printing</li>-->
             </ul>
           </div>
 
           <div class="filters-content">
             <div class="row grid">
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://avcoe.org"><img src="thumbnails\avcoe.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h4>AVCOE</h4>
-                    <div class="cat">Website design</div>
-                  </div>
+              {% for job in jobs.all %}
+            <div class="single-portfolio col-sm-4 all">
+              <div class="item">
+                <a href="{{job.url}}"><img src="{{ job.image.url }}" alt="Work 1"></a>
+                <div class="p-inner">
+                  <h4>{{ job.summary }}</h4>
+                  <div class="cat">{{ job.desc }}</div>
                 </div>
               </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://lakshyasports.com"><img src="thumbnails\lakshya.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h4>LAKSHYA SPORTS</h4>
-                    <div class="cat">WordPress Website</div>
-                  </div>
-                </div>
-              </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://pictmodelschool.com"><img src="thumbnails\pict.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h5>PICT</h5>
-                    <div class="cat">Website design</div>
-                  </div>
-                </div>
-              </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://abhiruchimall.com/"><img src="thumbnails\abhiruchi.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h5>ABHIRUCHI MALL</h5>
-                    <div class="cat">Website design</div>
-                  </div>
-                </div>
-              </div>
+            </div>
+            {% endfor%}
 
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://maksgenerators.com/"><img src="thumbnails\maks.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h4>MAKS ENERGY</h4>
-                    <div class="cat">Website design</div>
-                  </div>
-                </div>
-              </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://smbt.edu.in/"><img src="thumbnails\smbt.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h4>SMBT</h4>
-                    <div class="cat">Website Design</div>
-                  </div>
-                </div>
-              </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://valenscommunications.in"><img src="thumbnails\valens.jpg" alt="Work 1"></a>
-                  <div class="p-inner">
-                    <h5>VALENS</h5>
-                    <div class="cat">Website Design</div>
-                  </div>
-                </div>
-              </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://drshivajiraokadam.com/"><img src="img/shivaji.png" alt="Work 1">
-                  <div class="p-inner"></a>
-                    <h5>DR. SHIVAJIRAO KADAM</h5>
-                    <div class="cat">Website Design</div>
-                  </div>
-                </div>
-              </div>
-              <div class="single-portfolio col-sm-4 all">
-                <div class="item">
-                  <a href="http://bvrtse.in/"><img src="img/bvrtse.png" alt="Work 1">
-                  <div class="p-inner"></a>
-                    <h4>BVRTSE</h4>
-                    <div class="cat">Website Design</div>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
 
@@ -200,33 +164,17 @@ I create websites that are fast, cost effective, responsive, usable and SEO frie
       <section class="services-area pb-100" >
         <div class="container">
           <div class="row">
+            {% for service in services.all %}
             <div class="col-lg-4">
               <div class="single-service">
-                <img class="img-fluid" src="img/s1.png" alt="">
-                <h4>web design and development</h4>
+                <img class="img-fluid" src="{% static 'service.image'%}" alt="">
+                <h4>{{service.title}}</h4>
                 <p>
-                  Desgining a website focused on commerce is a complex task. Some say it's a mix between science and art, we combine best of both worlds to achieve your business goals.
-                </p>
+                {{service.body}}
+              </p>
               </div>
             </div>
-            <div class="col-lg-4">
-              <div class="single-service">
-                <img class="img-fluid" src="img/s2.png" alt="">
-                <h4>Software Development</h4>
-                <p>
-                  I have the expertise and quality to meet all your project requirements whether it is a custom software solution or a brand new custom application meeting your needs.
-                </p>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="single-service">
-                <img class="img-fluid" src="img/s3.png" alt="">
-                <h4>Graphic Design</h4>
-                <p>
-                  I can design eye catchy graphic designs which can be used for flexes,posters ,t shirts designs etc.
-                </p>
-              </div>
-            </div>
+            {%endfor%}
           </div>
         </div>
       </section>
@@ -378,21 +326,18 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> <i cl
       </footer>
       <!-- End footer Area -->
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-      <script src="js/easing.min.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/parallax.min.js"></script>
-    <script src="js/mail-script.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/main.js"></script>
-  <div style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"><a title="Hosted on free web hosting 000webhost.com. Host your own website for FREE." target="_blank" href="https://www.000webhost.com/?utm_source=000webhostapp&utm_campaign=000_logo&utm_medium=website&utm_content=footer_img"><img src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png" alt="www.000webhost.com"></a></div><script>function getCookie(t){for(var e=t+"=",n=decodeURIComponent(document.cookie).split(";"),o=0;o<n.length;o++){for(var i=n[o];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(e))return i.substring(e.length,i.length)}return""}getCookie("hostinger")&&(document.cookie="hostinger=;expires=Thu, 01 Jan 1970 00:00:01 GMT;",location.reload());var wordpressAdminBody=document.getElementsByClassName("wp-admin")[0],notification=document.getElementsByClassName("notice notice-success is-dismissible"),hostingerLogo=document.getElementsByClassName("hlogo"),mainContent=document.getElementsByClassName("notice_content")[0];if(null!=wordpressAdminBody&&notification.length>0&&null!=mainContent){var googleFont=document.createElement("link");googleFontHref=document.createAttribute("href"),googleFontRel=document.createAttribute("rel"),googleFontHref.value="https://fonts.googleapis.com/css?family=Roboto:300,400,600",googleFontRel.value="stylesheet",googleFont.setAttributeNode(googleFontHref),googleFont.setAttributeNode(googleFontRel);var css="@media only screen and (max-width: 576px) {#main_content {max-width: 320px !important;} #main_content h1 {font-size: 30px !important;} #main_content h2 {font-size: 40px !important; margin: 20px 0 !important;} #main_content p {font-size: 14px !important;} #main_content .content-wrapper {text-align: center !important;}} @media only screen and (max-width: 781px) {#main_content {margin: auto; justify-content: center; max-width: 445px;}} @media only screen and (max-width: 1325px) {.web-hosting-90-off-image-wrapper {position: absolute; max-width: 95% !important;} .notice_content {justify-content: center;} .web-hosting-90-off-image {opacity: 0.3;}} @media only screen and (min-width: 769px) {.notice_content {justify-content: space-between;} #main_content {margin-left: 5%; max-width: 445px;} .web-hosting-90-off-image-wrapper {position: absolute; right: 0; display: flex; padding: 0 5%}} .web-hosting-90-off-image {max-width: 90%; margin-top: 20px;} .content-wrapper {z-index: 5} .notice_content {display: flex; align-items: center;} * {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;} .upgrade_button_red_sale{box-shadow: 0 2px 4px 0 rgba(255, 69, 70, 0.2); max-width: 350px; border: 0; border-radius: 3px; background-color: #ff4546 !important; padding: 15px 55px !important;  margin-bottom: 48px; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 600; color: #ffffff;} .upgrade_button_red_sale:hover{color: #ffffff !important; background: #d10303 !important;}",style=document.createElement("style"),sheet=window.document.styleSheets[0];style.styleSheet?style.styleSheet.cssText=css:style.appendChild(document.createTextNode(css)),document.getElementsByTagName("head")[0].appendChild(style),document.getElementsByTagName("head")[0].appendChild(googleFont);var button=document.getElementsByClassName("upgrade_button_red")[0],link=button.parentElement;link.setAttribute("href","https://www.hostinger.com/hosting-starter-offer?utm_source=000webhost&utm_medium=panel&utm_campaign=000-wp"),link.innerHTML='<button class="upgrade_button_red_sale">TRANSFER NOW</button>',(notification=notification[0]).setAttribute("style","padding-bottom: 0; padding-top: 5px; background: url(https://cdn.000webhost.com/000webhost/promotions/cyber-monday-2019-bg.jpg); background-size: cover; background-repeat: no-repeat; color: #ffffff; border-color: #ff123a; border-width: 8px;"),notification.className="notice notice-error is-dismissible";var mainContentHolder=document.getElementById("main_content");mainContentHolder.setAttribute("style","padding: 0;"),hostingerLogo[0].remove();var h1Tag=notification.getElementsByTagName("H1")[0];h1Tag.className="000-h1",h1Tag.innerHTML="Cyber Monday Sale",h1Tag.setAttribute("style",'color: white;  margin-top: 48px; font-family: "Roboto", sans-serif; font-size: 48px; font-weight: 600;');var h2Tag=document.createElement("H2");h2Tag.innerHTML="Get 90% Off!",h2Tag.setAttribute("style",'color: white; margin: 45px 0; font-family: "Roboto", sans-serif; font-size: 80px; font-weight: 600;'),h1Tag.parentNode.insertBefore(h2Tag,h1Tag.nextSibling);var paragraph=notification.getElementsByTagName("p")[0];paragraph.innerHTML="Don’t miss the opportunity to enjoy up to <strong>4x WordPress Speed, Free SSL and all premium features</strong> available for a fraction of the price!",paragraph.setAttribute("style",'font-family: "Roboto", sans-serif; font-size: 18px; font-weight: 300;');var list=notification.getElementsByTagName("UL")[0];list.remove();var org_html=mainContent.innerHTML,new_html='<div class="content-wrapper">'+mainContent.innerHTML+'</div><div class="web-hosting-90-off-image-wrapper"><img class="web-hosting-90-off-image" src="https://cdn.000webhost.com/000webhost/promotions/cyber-monday-2019-img.png"></div>';mainContent.innerHTML=new_html;var saleImage=mainContent.getElementsByClassName("web-hosting-90-off-image")[0]}</script></body>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/easing.min.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.jss' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/parallax.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"""></script>
+  </body>
 </html>
